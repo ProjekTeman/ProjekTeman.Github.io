@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mbkcheeutang</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #A1D6B2;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: normal;
+            color: #444;
+        }
+
+        .method-button {
+            background-color: #4682B4;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            margin: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .method-button:hover {
+            background-color: #00BFFF;
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .bubble {
+            animation: bubble 0.5s ease-out forwards;
+        }
+
+        @keyframes bubble {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        form {
+            margin: 20px auto;
+            text-align: left;
+            display: inline-block;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 1rem;
+            margin-top: 5px;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #4682B4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #00BFFF;
+        }
+
+        .social-icons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-icons a {
+            margin: 10px;
+        }
+
+        .social-icons img {
+            width: 60px;
+            height: 60px;
+            transition: transform 0.3s;
+        }
+
+        .social-icons img:hover {
+            transform: scale(1.1);
+        }
+
+        .saweria-icon {
+            width: 60px;
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Mbkcheeutang</h1>
+    <div class="tagline">Tempat Utang Paling Asik Dan Amanah</div>
+    <h2>Pilih Metode Pembayaran</h2>
+
+    <!-- Tombol Metode Pembayaran -->
+    <button class="method-button" id="tunaiBtn">Tunai</button>
+    <button class="method-button" id="transferBtn">Transfer (GoPay)</button>
+
+    <!-- Form Tunai -->
+    <div id="tunaiForm" class="hidden">
+        <h2>Form Hutang Tunai</h2>
+        <form id="tunaiDebtForm">
+            <label>Nama: <input type="text" id="tunaiName" required></label>
+            <label>Nomor Telepon: <input type="tel" id="tunaiPhone" required></label>
+            <label>Alamat: <input type="text" id="tunaiAddress" required></label>
+            <label>Nominal Hutang: <input type="number" id="tunaiAmount" required></label>
+            <label>Tanggal Hutang: <input type="date" id="tunaiDebtDate" required></label>
+            <label>Tanggal Pembayaran: <input type="date" id="tunaiPayDate" required></label>
+            <button type="button" onclick="submitTunai()">Submit</button>
+        </form>
+    </div>
+
+    <!-- Form Transfer GoPay -->
+    <div id="transferForm" class="hidden">
+        <h2>Form Hutang Transfer (GoPay)</h2>
+        <form id="transferDebtForm">
+            <label>Nama: <input type="text" id="transferName" required></label>
+            <label>Nomor Telepon: <input type="tel" id="transferPhone" required></label>
+            <label>Alamat: <input type="text" id="transferAddress" required></label>
+            <label>Tanggal Hutang: <input type="date" id="transferDebtDate" required></label>
+            <label>Tanggal Pembayaran: <input type="date" id="transferPayDate" required></label>
+            <button type="button" onclick="submitTransfer()">Minta Izin Transfer</button>
+        </form>
+    </div>
+
+    <!-- Ringkasan Hutang Tunai -->
+    <div id="tunaiSummary" class="hidden"></div>
+
+    <!-- Ringkasan Hutang Transfer -->
+    <div id="transferSummary" class="hidden"></div>
+
+    <!-- Icon Media Sosial -->
+    <div class="social-icons">
+        <a href="https://wa.me/895334816800" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+        </a>
+        <a href="https://www.tiktok.com/@mbakcheeutang?_t=8pbS1KlKhLr&_r=1" target="_blank">
+            <img src="5545a2a9ce938ec70e0941cdd7a82105.jpg" alt="TikTok">
+        </a>
+        <a href="https://youtube.com/@mbakchee_?si=37luG9UwxfGj8ntL" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube">
+        </a>
+        <a href="https://www.instagram.com/mbakcheeutang_?igsh=aTBxNzUwcnU1cW95" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=100086166318312&mibextid=ZbWKwL" target="_blank">
+            <img src="63a231592efca78f2bcbc02267eb37be.jpg" alt="Facebook">
+        </a>
+        <a href="https://saweria.co/mbakcheeutang" target="_blank">
+            <img class="saweria-icon" src="1_Zv6P9O6aFyxKolLPwD2ghQ.png" alt="Saweria">
+        </a>
+    </div>
+
+<script>
+    // Efek gelembung pada klik tombol metode
+    document.getElementById('tunaiBtn').addEventListener('click', function() {
+        const tunaiBtn = document.getElementById('tunaiBtn');
+        tunaiBtn.classList.add('bubble');
+        setTimeout(() => {
+            tunaiBtn.classList.remove('bubble');
+            document.getElementById('tunaiForm').classList.remove('hidden');
+            document.getElementById('transferForm').classList.add('hidden');
+        }, 500);
+    });
+
+    document.getElementById('transferBtn').addEventListener('click', function() {
+        const transferBtn = document.getElementById('transferBtn');
+        transferBtn.classList.add('bubble');
+        setTimeout(() => {
+            transferBtn.classList.remove('bubble');
+            document.getElementById('tunaiForm').classList.add('hidden');
+            document.getElementById('transferForm').classList.remove('hidden');
+        }, 500);
+    });
+
+    // Fungsi Submit Tunai
+    function submitTunai() {
+        const name = document.getElementById('tunaiName').value;
+        const phone = document.getElementById('tunaiPhone').value;
+        const address = document.getElementById('tunaiAddress').value;
+        const amount = document.getElementById('tunaiAmount').value;
+        const debtDate = document.getElementById('tunaiDebtDate').value;
+        const payDate = document.getElementById('tunaiPayDate').value;
+
+        const summary = `
+            <h2>Detail Hutang Tunai</h2>
+            <p><strong>Nama:</strong> ${name}</p>
+            <p><strong>Nomor Telepon:</strong> ${phone}</p>
+            <p><strong>Alamat:</strong> ${address}</p>
+            <p><strong>Total Hutang:</strong> Rp${amount}</p>
+            <p><strong>Tanggal Hutang:</strong> ${debtDate}</p>
+            <p><strong>Tanggal Pembayaran:</strong> ${payDate}</p>
+            <button onclick="goBack()">Kembali ke Halaman Utama</button>
+        `;
+
+        document.getElementById('tunaiSummary').innerHTML = summary;
+        document.getElementById('tunaiSummary').classList.remove('hidden');
+        document.getElementById('tunaiForm').classList.add('hidden');
+    }
+
+    // Fungsi Submit Transfer
+    function submitTransfer() {
+        const name = document.getElementById('transferName').value;
+        const phone = document.getElementById('transferPhone').value;
+        const address = document.getElementById('transferAddress').value;
+        const debtDate = document.getElementById('transferDebtDate').value;
+        const payDate = document.getElementById('transferPayDate').value;
+
+        alert('Minta izin kepada pemilik sebelum melakukan transfer.');
+
+        const summary = `
+            <h2>Uang Sudah Ditransfer</h2>
+            <p><strong>Nama:</strong> ${name}</p>
+            <p><strong>Nomor Telepon:</strong> ${phone}</p>
+            <p><strong>Alamat:</strong> ${address}</p>
+            <p><strong>Tanggal Hutang:</strong> ${debtDate}</p>
+            <p><strong>Tanggal Pembayaran:</strong> ${payDate}</p>
+            <button onclick="goBack()">Kembali ke Halaman Utama</button>
+        `;
+
+        document.getElementById('transferSummary').innerHTML = summary;
+        document.getElementById('transferSummary').classList.remove('hidden');
+        document.getElementById('transferForm').classList.add('hidden');
+    }
+
+    function goBack() {
+        document.getElementById('tunaiSummary').classList.add('hidden');
+        document.getElementById('transferSummary').classList.add('hidden');
+    }
+</script>
+
+</body>
+</html>
